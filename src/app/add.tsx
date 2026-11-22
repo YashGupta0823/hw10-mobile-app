@@ -16,7 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppColors } from '@/constants/colors';
-import { addWorkout } from '@/storage/workouts';
+import { addWorkout, StoredWorkoutsError } from '@/storage/workouts';
 
 const MAX_EXERCISE_LENGTH = 50;
 const MAX_SETS = 100;
@@ -85,7 +85,18 @@ export default function AddWorkoutScreen() {
       goBack();
     } catch (e) {
       console.error('RepTrack: failed to save workout', e);
-      Alert.alert('Could not save workout', 'Something went wrong saving your workout. Please try again.');
+      if (e instanceof StoredWorkoutsError) {
+        Alert.alert(
+          'Saving is blocked',
+          'Your existing workout data appears to be damaged. To avoid overwriting it, ' +
+            'this workout was not saved.'
+        );
+      } else {
+        Alert.alert(
+          'Could not save workout',
+          'Something went wrong saving your workout. Please try again.'
+        );
+      }
       setSaving(false);
     }
   };

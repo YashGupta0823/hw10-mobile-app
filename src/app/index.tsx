@@ -1,5 +1,5 @@
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -11,7 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppColors } from '@/constants/colors';
-import { loadWorkouts } from '@/storage/workouts';
+import { loadWorkouts, StoredWorkoutsError } from '@/storage/workouts';
 import type { Workout } from '@/types/workout';
 
 function formatDate(iso: string): string {
@@ -61,15 +61,24 @@ export default function HomeScreen() {
       setError(null);
     } catch (e) {
       console.error('RepTrack: failed to load workouts', e);
-      setError('Could not load your workouts. Please try again.');
+      setError(
+        e instanceof StoredWorkoutsError
+          ? 'Your saved workout data appears to be damaged and could not be read. ' +
+              'To protect it, RepTrack will not save new workouts until this is resolved.'
+          : 'Could not load your workouts. Please try again.'
+      );
     } finally {
       setLoading(false);
     }
   }, []);
 
+  // Prevents a rapid double tap from pushing the Add screen twice.
+  const navigatingRef = useRef(false);
+
   // Reload whenever the screen gains focus (e.g. after saving a workout).
   useFocusEffect(
     useCallback(() => {
+      navigatingRef.current = false;
       refresh();
     }, [refresh])
   );
@@ -130,7 +139,11 @@ export default function HomeScreen() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Add Workout"
-          onPress={() => router.push('/add')}
+          onPress={() => {
+            if (navigatingRef.current) return;
+            navigatingRef.current = true;
+            router.push('/add');
+          }}
           style={({ pressed }) => [styles.primaryButton, pressed && styles.pressed]}>
           <Text style={styles.primaryButtonText}>+ Add Workout</Text>
         </Pressable>

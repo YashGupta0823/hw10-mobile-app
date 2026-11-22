@@ -1,56 +1,51 @@
-# Welcome to your Expo app 👋
+RepTrack - Workout Logger
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+About
+RepTrack is a simple mobile workout logger that lets users record exercises, sets, and reps while keeping track of their workout history. I chose this idea because I wanted to build something practical, easy to use, and useful for tracking workouts without unnecessary features.
 
-## Get started
+Features and Screens
+1. Home Screen
+- Displays previously logged workouts with exercise names, sets, reps, and dates.
+- Shows the most recent workouts first.
+- Includes an "Add Workout" button to log a new exercise.
+- Displays a message when no workouts have been recorded.
 
-1. Install dependencies
+2. Add Workout Screen
+- Allows users to enter an exercise name, sets, and reps.
+- Validates inputs to prevent invalid entries.
+- Saves workouts and automatically returns to the Home screen.
+- Includes a back button to cancel without saving.
 
-   ```bash
+Workouts are saved locally using AsyncStorage, so they remain available even after closing and reopening the app.
+
+Setup and Running the App
+Technology: React Native, Expo SDK 58, Expo Router, TypeScript, and AsyncStorage.
+
+To run the project:
+
+1. Clone the repository:
+   bash
+   git clone https://github.com/YashGupta0823/hw10-mobile-app.git
+   
+2. Navigate into the project:
+   bash
+   cd hw10-mobile-app
+   
+3. Install dependencies (Node.js 22.13 or newer required):
+   bash
    npm install
-   ```
-
-2. Start the app
-
-   ```bash
+   
+4. Start Expo:
+   bash
    npx expo start
-   ```
+   
+5. Open Expo Go on your phone and scan the QR code. Make sure your phone and computer are on the same Wi-Fi network.
 
-In the output, you'll find options to open the app in a
+What I Learned
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+One thing that surprised me about mobile development was how easily Expo Go lets me run an actual mobile app on my iPhone without using Xcode or publishing anything to the App Store. I also learned how React Native uses components for screens and how AsyncStorage allows data to persist between app sessions.
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+AI Development Process
+I used Claude Code to implement the application based on my initial SPEC.md. After the build, I used a separate Claude Code session to independently review the code against the specification. I then addressed the review findings and tested the app on my iPhone.
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+The repository includes SPEC.md, REVIEW.md, and a prompt log documenting the development process.
